@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Cipher Bench &mdash; Simulasi Kriptografi Simetris{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-bits" aria-hidden="true" id="heroBits"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">Web Simulasi Algoritma Kriptografi Simetris</p>
+    <h1>Setiap bit, terlihat<br>di setiap ronde.</h1>
+    <p class="hero-sub">
+      Cipher Bench menjalankan empat algoritma block cipher &mdash; DES, S-DES, AES, dan S-AES &mdash;
+      langsung di depan mata Anda. Masukkan plaintext dan kunci, lalu telusuri setiap tahapan
+      perhitungan: pembentukan subkey, permutasi, substitusi S-Box, hingga hasil akhir.
+    </p>
+  </div>
+</section>
+
+<section class="module-grid">
+  {% for key, mod in modules.items() %}
+  <a class="module-card" href="{{ url_for('module_page', key=key) }}">
+    <div class="module-card-top">
+      <span class="module-badge">{{ mod.block_bits }}-bit</span>
+      <span class="module-code">{{ mod.name }}</span>
+    </div>
+    <h2>{{ mod.full_name }}</h2>
+    <p>{{ mod.desc }}</p>
+    <div class="module-card-foot">
+      <span>Kunci {{ mod.key_bits }}-bit</span>
+      <span class="arrow">Buka simulasi &rarr;</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+<section class="how-it-works">
+  <h2>Bagaimana cara kerjanya</h2>
+  <div class="steps-row">
+    <div class="how-step">
+      <span class="how-num">Input</span>
+      <p>Masukkan plaintext/ciphertext dan key sesuai panjang bit algoritma, lalu pilih mode Enkripsi atau Dekripsi.</p>
+    </div>
+    <div class="how-step">
+      <span class="how-num">Proses</span>
+      <p>Aplikasi menghitung setiap tahapan &mdash; key generation, permutasi, substitusi, XOR &mdash; secara live.</p>
+    </div>
+    <div class="how-step">
+      <span class="how-num">Solusi</span>
+      <p>Tampilkan seluruh langkah penyelesaian untuk memverifikasi hasil terhadap perhitungan manual Anda.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>document.addEventListener('DOMContentLoaded', initHeroBits);</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ mod.name }} &mdash; Cipher Bench{% endblock %}
+
+{% block content %}
+<section class="module-header">
+  <p class="eyebrow"><a href="{{ url_for('index') }}" class="back-link">&larr; Semua modul</a></p>
+  <h1>{{ mod.full_name }} <span class="module-badge">{{ mod.name }}</span></h1>
+  <p class="hero-sub">{{ mod.desc }}</p>
+</section>
+
+<section class="workbench">
+  <form id="cipherForm" class="panel input-panel">
+    <div class="panel-title">Input</div>
+
+    <div class="mode-toggle" role="radiogroup" aria-label="Mode">
+      <button type="button" class="mode-btn active" data-mode="encrypt">Enkripsi</button>
+      <button type="button" class="mode-btn" data-mode="decrypt">Dekripsi</button>
+    </div>
+
+    <label class="field-label" id="textLabel">Plaintext ({{ mod.block_bits }}-bit, {{ 'biner' if mod.input_format=='bin' else 'hex' }})</label>
+    <input type="text" id="textInput" class="field-input mono" placeholder="{{ mod.example_text }}" autocomplete="off">
+    <span class="field-hint" id="textHint"></span>
+
+    <label class="field-label">Key ({{ mod.key_bits }}-bit, {{ 'biner' if mod.input_format=='bin' else 'hex' }})</label>
+    <input type="text" id="keyInput" class="field-input mono" placeholder="{{ mod.example_key }}" autocomplete="off">
+    <span class="field-hint" id="keyHint"></span>
+
+    <div class="btn-row">
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" id="resetBtn" class="btn btn-ghost">Reset</button>
+      <button type="button" id="exampleBtn" class="btn btn-ghost">Isi Contoh</button>
+    </div>
+
+    <div id="formError" class="form-error" hidden></div>
+  </form>
+
+  <div class="panel result-panel">
+    <div class="panel-title">Hasil</div>
+    <div id="resultEmpty" class="result-empty">Belum ada hasil. Isi form dan klik Submit.</div>
+    <div id="resultBox" class="result-box" hidden>
+      <span class="result-label" id="resultLabel">Ciphertext</span>
+      <div id="resultBits" class="bit-row bit-row-lg"></div>
+      <div id="resultHexWrap" class="result-hex"></div>
+    </div>
+  </div>
+</section>
+
+<section class="solution-section">
+  <button type="button" id="toggleSolution" class="btn btn-outline" disabled>
+    Tampilkan Solusi Penyelesaian
+  </button>
+  <div id="solutionSteps" class="solution-steps" hidden></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const MODULE_CONFIG = {
+  key: "{{ mod_key }}",
+  endpoint: "{{ mod.endpoint }}",
+  blockBits: {{ mod.block_bits }},
+  keyBits: {{ mod.key_bits }},
+  inputFormat: "{{ mod.input_format }}",
+  exampleText: "{{ mod.example_text }}",
+  exampleKey: "{{ mod.example_key }}",
+  name: "{{ mod.name }}"
+};
+document.addEventListener('DOMContentLoaded', () => initModulePage(MODULE_CONFIG));
+</script>
+{% endblock %}
