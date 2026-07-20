@@ -139,3 +139,4 @@ Seluruh tabel algoritma (PC-1/PC-2, S-Box DES, S-Box AES/Rijndael, S-Box S-DES/S
 mengikuti spesifikasi standar publik (FIPS 46-3, FIPS 197, dan paper S-DES/S-AES Schaefer et al.),
 sehingga hasil aplikasi dapat langsung dibandingkan dengan perhitungan manual pada laporan.
 # cryptobench
+# cryptobench
